@@ -1,0 +1,21 @@
+<html>
+<head>
+</head>
+<body>
+
+Follow requests
+<form action="/accept" method="GET">
+    {% for line in request %}
+    <input type="radio" name="follower" value={{ line.follower }}>{{ line.follower }}</input>
+    <br>
+    {% endfor %}
+    <input type="radio" name="choice" value="TRUE">accept</input>
+    <input type="radio" name="choice" value="FALSE">decline</input>
+    <br>
+    <input type="submit" value="submit">
+</form>
+
+<a href="/home">goBack</a>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="54546ac4-a0a1-4931-aa72-ea4adf0b6974" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Flask Main" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1aEIg9wDqRPC2ioYuzIvzhdKur1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Zijie Xiong\PycharmProjects\finstagram\templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="finstagram" type="Python.FlaskServer">
+      <module name="finstagram" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="54546ac4-a0a1-4931-aa72-ea4adf0b6974" name="Default Changelist" comment="" />
+      <created>1586294435007</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586294435007</updated>
+      <workItem from="1586294455973" duration="13551000" />
+      <workItem from="1586318572797" duration="2671000" />
+      <workItem from="1586321284889" duration="2036000" />
+      <workItem from="1586323427552" duration="2496000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="415" y="183" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586321884339">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="415" y="183" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1368.872@0.0.1368.872" timestamp="1586321884339" />
+    <state x="465" y="191" key="FileChooserDialogImpl" timestamp="1586326725098">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="465" y="191" key="FileChooserDialogImpl/0.0.1368.872@0.0.1368.872" timestamp="1586326725098" />
+    <state width="1326" height="211" key="GridCell.Tab.0.bottom" timestamp="1586325398874">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="211" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1586325398874" />
+    <state width="1326" height="211" key="GridCell.Tab.0.center" timestamp="1586325398872">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="211" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1586325398872" />
+    <state width="1326" height="211" key="GridCell.Tab.0.left" timestamp="1586325398872">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="211" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1586325398872" />
+    <state width="1326" height="211" key="GridCell.Tab.0.right" timestamp="1586325398873">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="211" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1586325398873" />
+    <state x="187" y="79" key="SettingsEditor" timestamp="1586295044859">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="187" y="79" key="SettingsEditor/0.0.1368.872@0.0.1368.872" timestamp="1586295044859" />
+    <state x="368" y="260" key="com.intellij.ide.util.TipDialog" timestamp="1586323428288">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="368" y="260" key="com.intellij.ide.util.TipDialog/0.0.1368.872@0.0.1368.872" timestamp="1586323428288" />
+    <state x="348" y="185" width="672" height="678" key="search.everywhere.popup" timestamp="1586320798512">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="348" y="185" width="672" height="678" key="search.everywhere.popup/0.0.1368.872@0.0.1368.872" timestamp="1586320798512" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/finstagram$finstagram.coverage" NAME="finstagram Coverage Results" MODIFIED="1586325398840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>
