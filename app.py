@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, url_for, redirect
 import pymysql.cursors
 import hashlib
+from functools import wraps
 import time
 
 app = Flask(__name__)
@@ -8,6 +9,14 @@ app = Flask(__name__)
 conn = pymysql.connect(host='localhost', port=3308, user='root', password='',
                        db='finstagram', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
+
+def login_required(f):
+    @wraps(f)
+    def dec(*args,**kwargs):
+        if not "username" in session:
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return dec
 
 # Define a route to hello function
 @app.route('/')
@@ -27,10 +36,12 @@ def register():
     return render_template('register.html')
 
 @app.route('/follow')
+@login_required
 def follow():
     return render_template('follow.html')
 
 @app.route('/follow_request', methods=['GET','POST'])
+@login_required
 def follow_request():
     user=session['username']
     cursor=conn.cursor()
@@ -41,11 +52,13 @@ def follow_request():
     return render_template('follow_request.html', request=data)
 
 @app.route('/friendgroup')
+@login_required
 def friendgroup():
     return render_template('friendgroup.html')
 
 # Authenticates the login
 @app.route('/loginAuth', methods=['GET', 'POST'])
+@login_required
 def loginAuth():
     # grabs information from the forms
     username = request.form['username']
@@ -75,6 +88,7 @@ def loginAuth():
 
 # Authenticates the register
 @app.route('/registerAuth', methods=['GET', 'POST'])
+@login_required
 def registerAuth():
     # grabs information from the forms
     username = request.form['username']
@@ -106,6 +120,7 @@ def registerAuth():
 
 
 @app.route('/home')
+@login_required
 def home():
     user = session['username']
     cursor = conn.cursor();
@@ -116,6 +131,7 @@ def home():
     return render_template('home.html', username=user, photos=data)
 
 @app.route('/followAuth', methods=['GET', 'POST'])
+@login_required
 def followAuth():
     follower=session['username']
     followee=request.form['username']
@@ -141,6 +157,7 @@ def followAuth():
         return render_template('follow.html', error=error)
 
 @app.route("/accept", methods=['GET','POST'])
+@login_required
 def accept():
     followee = session["username"]
     follower = request.args['follower']
@@ -169,6 +186,7 @@ def accept():
 
 
 @app.route('/post', methods=['GET', 'POST'])
+@login_required
 def post():
     username = session['username']
     cursor = conn.cursor();
@@ -182,6 +200,7 @@ def post():
     return redirect(url_for('home'))
 
 @app.route('/newgroup', methods=['GET','POST'])
+@login_required
 def newgroup():
     username=session['username']
     groupname=request.form['name']
@@ -206,6 +225,7 @@ def newgroup():
 
 
 @app.route('/select_blogger')
+@login_required
 def select_blogger():
     # check that user is logged in
     # username = session['username']
@@ -220,6 +240,7 @@ def select_blogger():
 
 
 @app.route('/show_posts', methods=["GET", "POST"])
+@login_required
 def show_posts():
     poster = request.args['poster']
     cursor = conn.cursor();
@@ -231,6 +252,7 @@ def show_posts():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     session.pop('username')
     return redirect('/')
