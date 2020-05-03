@@ -2,12 +2,8 @@
 <head>
 </head>
 <body>
-<form action="/post" method="POST">
-	<h1>Welcome {{username}}</h1> 
-	<input type="text" name = "filepath" placeholder="post" required/> </br>
-    <input type="radio" name="allFollowers" value=true></br>Share with all followers
-	<input type="submit" value = "Post" />
-</form>
+
+<h1>Welcome {{username}}</h1>
 
 
 <style type="text/css">
@@ -16,6 +12,14 @@
 	}
 </style>
 
+<a href="/post">post new photos</a>
+<br>
+<a href="/follow">follow others</a>
+<br>
+<a href="/follow_request">follow request</a>
+<br>
+<a href="/friendgroup">new friend group</a>
+<a href="/logout">Logout</a>
 Here are your photos:
 
 <table>
@@ -30,12 +34,7 @@ Here are your photos:
 {% endfor %}
 </table>
 
-<a href="/follow">follow others</a>
-<br>
-<a href="/follow_request">follow request</a>
-<br>
-<a href="/friendgroup">new friend group</a>
-<a href="/logout">Logout</a>
+
 
 </body>
 

@@ -56,9 +56,22 @@ def follow_request():
 def friendgroup():
     return render_template('friendgroup.html')
 
+@app.route('/post')
+@login_required
+def post():
+    username=session['username']
+    cursor = conn.cursor();
+    query = 'SELECT groupName FROM friendgroup WHERE groupCreator=%s'
+    cursor.execute(query, (username))
+    data = cursor.fetchall()
+    cursor.close()
+    return render_template('post.html', friendgroup=data)
+
+
+
+
 # Authenticates the login
 @app.route('/loginAuth', methods=['GET', 'POST'])
-@login_required
 def loginAuth():
     # grabs information from the forms
     username = request.form['username']
@@ -119,13 +132,13 @@ def registerAuth():
         return render_template('index.html')
 
 
-@app.route('/home')
+@app.route('/home', methods=['GET'])
 @login_required
 def home():
     user = session['username']
     cursor = conn.cursor();
-    query = 'SELECT postingDate, poster FROM photo WHERE poster = %s ORDER BY postingDate DESC'
-    cursor.execute(query, (user))
+    query = 'SELECT pID FROM photo NATURAL JOIN sharedwith NATURAL JOIN belongTo WHERE username=%s OR pID IN (SELECT pID FROM photo NATURAL JOIN follow WHERE follower=%s AND allFollowers=1) ORDER BY postingDate DESC'
+    cursor.execute(query, (user, user))
     data = cursor.fetchall()
     cursor.close()
     return render_template('home.html', username=user, photos=data)
@@ -151,7 +164,7 @@ def followAuth():
             cursor.execute(ins, (follower, followee))
             conn.commit()
             cursor.close()
-            return render_template('home.html')
+            return render_template('home')
     else:
         error = "user not exist"
         return render_template('follow.html', error=error)
@@ -185,17 +198,26 @@ def accept():
 
 
 
-@app.route('/post', methods=['GET', 'POST'])
+@app.route('/posting', methods=['GET', 'POST'])
 @login_required
-def post():
+def posting():
     username = session['username']
-    cursor = conn.cursor();
     filePath = request.form['filePath']
     allFollowers = request.form['allFollowers']
-
-    query = 'INSERT INTO photo (postingDate, allFollowers, poster) VALUES(%s, %s)'
-    cursor.execute(query, (time.strftime('%y-%m-%d %H:%M:%S'), allFollowers, username))
+    cursor = conn.cursor();
+    postingtime=time.strftime('%y-%m-%d %H:%M:%S')
+    query = 'INSERT INTO photo (filePath, postingDate, allFollowers, poster) VALUES(%s, %s, %s, %s)'
+    cursor.execute(query, (filePath, postingtime, allFollowers, username))
     conn.commit()
+    if(allFollowers==0):
+        query = 'SELECT pID FROM photo WHERE postingDate=%s AND poster=%s'
+        cursor.execute(query, (postingtime, username))
+        pID = cursor.fetchone()
+        groupname = request.args['groupname']
+        query = 'INSERT INTO sharedwith (pID, groupName, groupCreator) VALUES(%s, %s, %s)'
+        for line in groupname:
+            cursor.execute(query, (pID, line, username))
+            conn.commit()
     cursor.close()
     return redirect(url_for('home'))
 

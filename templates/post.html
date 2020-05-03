@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<form action="/posting" method="POST">
+	<input type="text" name = "filePath" placeholder="filepath" required/> </br>
+    <input type="radio" name="allFollowers" value="1" required>Share with all followers
+    <input type="radio" name="allFollowers" value="0">Share with specific friendgroup</br>
+    <h1>select friendgroup</h1>
+    <table id="friendgroup">
+    <tr>
+     {% for line in friendgroup %}
+    <input type="checkbox" name="groupname" value={{ line.groupName }}>{{ line.groupName }}</input>
+    <br>
+    {% endfor %}
+    </tr>
+    </table>
+	<input type="submit" value = Post />
+</form>
+
+</body>
+</html>
