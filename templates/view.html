@@ -1,0 +1,19 @@
+<head>
+    <title>View photo</title>
+</head>
+<body>
+    <a>pID: {{ photo.pID }}</a><br>
+    <a>poster: {{ photo.firstName }}  {{ photo.lastName }}</a><br>
+    <img src="{{ photo.filePath }}"><br>
+    <a>date: {{ photo.postingDate }}</a><br>
+    tags:<br>
+    {% for line in tag %}
+    <a>username: {{ line.username }} name: {{ line.firstName }}  {{ line.lastName }}</a><br>
+    {% endfor %}
+    react:<br>
+    {% for line in react %}
+    <a>{{ line.username }}: {% if line.comment %}{{ line.comment }} {% endif %} {% if line.emoji %} ({{ line.emoji }}) {% endif %}</a><br>
+    {% endfor %}
+    <a href="/home">back to homepage</a>
+</body>
+</html>

@@ -59,14 +59,24 @@ def friendgroup():
 @app.route('/post')
 @login_required
 def post():
-    username=session['username']
-    cursor = conn.cursor();
-    query = 'SELECT groupName FROM friendgroup WHERE groupCreator=%s'
-    cursor.execute(query, (username))
-    data = cursor.fetchall()
-    cursor.close()
-    return render_template('post.html', friendgroup=data)
+    return render_template('post.html')
 
+@app.route('/view', methods=['GET','POST'])
+@login_required
+def view():
+    pID=request.form["pID"]
+    cursor=conn.cursor()
+    query="SELECT * FROM photo JOIN person ON (poster=username) WHERE pID=%s"
+    cursor.execute(query, (pID))
+    photo=cursor.fetchone()
+    query="SELECT * FROM reactto WHERE pID=%s"
+    cursor.execute(query, (pID))
+    react=cursor.fetchall()
+    query="SELECT * FROM tag NATURAL JOIN person WHERE pID=%s AND tagStatus=1"
+    cursor.execute(query, (pID))
+    tag=cursor.fetchall()
+    cursor.close()
+    return render_template('view.html', photo=photo, react=react, tag=tag)
 
 
 
@@ -137,8 +147,8 @@ def registerAuth():
 def home():
     user = session['username']
     cursor = conn.cursor();
-    query = 'SELECT pID FROM photo NATURAL JOIN sharedwith NATURAL JOIN belongTo WHERE username=%s OR pID IN (SELECT pID FROM photo NATURAL JOIN follow WHERE follower=%s AND allFollowers=1) ORDER BY postingDate DESC'
-    cursor.execute(query, (user, user))
+    query = "SELECT pID FROM photo WHERE poster IN (SELECT poster FROM follow JOIN photo on(poster=followee) WHERE allFollowers=1 AND follower=%s AND followStatus=1) OR pID IN (SELECT pID FROM sharedwith WHERE (groupCreator,groupName) IN (SELECT groupCreator, groupName from belongto where username=%s)) OR poster=%s"
+    cursor.execute(query, (user, user, user))
     data = cursor.fetchall()
     cursor.close()
     return render_template('home.html', username=user, photos=data)
@@ -164,7 +174,7 @@ def followAuth():
             cursor.execute(ins, (follower, followee))
             conn.commit()
             cursor.close()
-            return render_template('home')
+            return redirect(url_for('home'))
     else:
         error = "user not exist"
         return render_template('follow.html', error=error)
@@ -196,28 +206,42 @@ def accept():
 
 
 
-
-
 @app.route('/posting', methods=['GET', 'POST'])
 @login_required
 def posting():
     username = session['username']
     filePath = request.form['filePath']
-    allFollowers = request.form['allFollowers']
+    choice = request.form['allFollowers']
     cursor = conn.cursor();
-    postingtime=time.strftime('%y-%m-%d %H:%M:%S')
-    query = 'INSERT INTO photo (filePath, postingDate, allFollowers, poster) VALUES(%s, %s, %s, %s)'
-    cursor.execute(query, (filePath, postingtime, allFollowers, username))
+    postingtime = time.strftime('%y-%m-%d %H:%M:%S')
+    if choice=="TRUE":
+        query = 'INSERT INTO photo (filePath, postingDate, allFollowers, poster) VALUES(%s, %s, 1, %s)'
+    else:
+        query = 'INSERT INTO photo (filePath, postingDate, allFollowers, poster) VALUES(%s, %s, 0, %s)'
+    cursor.execute(query, (filePath, postingtime, username))
     conn.commit()
-    if(allFollowers==0):
+    if choice=="FALSE":
         query = 'SELECT pID FROM photo WHERE postingDate=%s AND poster=%s'
         cursor.execute(query, (postingtime, username))
-        pID = cursor.fetchone()
-        groupname = request.args['groupname']
-        query = 'INSERT INTO sharedwith (pID, groupName, groupCreator) VALUES(%s, %s, %s)'
-        for line in groupname:
-            cursor.execute(query, (pID, line, username))
-            conn.commit()
+        pID = cursor.fetchall()
+        query = 'SELECT groupName FROM friendgroup WHERE groupCreator=%s'
+        cursor.execute(query, (username))
+        friendgroup = cursor.fetchall()
+        cursor.close()
+        return render_template("select_friendgroup.html", friendgroup=friendgroup, pID=pID)
+    cursor.close()
+    return redirect(url_for('home'))
+
+@app.route("/sharedwith", methods=['GET','POST'])
+@login_required
+def sharedwith():
+    username=session["username"]
+    groupname = request.form['groupname']
+    pID=request.form['pID']
+    cursor=conn.cursor()
+    query = 'INSERT INTO sharedwith (pID, groupName, groupCreator) VALUES(%s, %s, %s)'
+    cursor.execute(query, (pID, groupname, username))
+    conn.commit()
     cursor.close()
     return redirect(url_for('home'))
 
@@ -242,39 +266,12 @@ def newgroup():
         cursor.execute(ins, (username, groupname, username))
         conn.commit()
         cursor.close()
-        return render_template("home.html");
+        return redirect(url_for('home'))
 
 
-
-@app.route('/select_blogger')
-@login_required
-def select_blogger():
-    # check that user is logged in
-    # username = session['username']
-    # should throw exception if username not found
-
-    cursor = conn.cursor();
-    query = 'SELECT DISTINCT username FROM blog'
-    cursor.execute(query)
-    data = cursor.fetchall()
-    cursor.close()
-    return render_template('select_blogger.html', user_list=data)
-
-
-@app.route('/show_posts', methods=["GET", "POST"])
-@login_required
-def show_posts():
-    poster = request.args['poster']
-    cursor = conn.cursor();
-    query = 'SELECT ts, blog_post FROM blog WHERE username = %s ORDER BY ts DESC'
-    cursor.execute(query, poster)
-    data = cursor.fetchall()
-    cursor.close()
-    return render_template('show_posts.html', poster_name=poster, posts=data)
 
 
 @app.route('/logout')
-@login_required
 def logout():
     session.pop('username')
     return redirect('/')

@@ -21,18 +21,16 @@
 <a href="/friendgroup">new friend group</a>
 <a href="/logout">Logout</a>
 Here are your photos:
+<br>
+Select the photo that you want to view
+<br>
+<form action="/view" method="POST">
+    {% for line in photos %}
+		<input type="radio" name="pID" value={{ line.pID }}>{{line.pID}}</INPUT><br>
+    {% endfor %}
+    <input type="submit" value="view">
+</form>
 
-<table>
-	<th>Time</th>
-	<th>Photos</th>
-
-{% for line in photos %}
-	<tr>
-		<td>{{line.postingdate}}</td>
-		<td>{{line.photos}}</td>
-	</tr>
-{% endfor %}
-</table>
 
 
 

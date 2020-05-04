@@ -3,6 +3,18 @@
     <title>Title</title>
 </head>
 <body>
-
+<form action="/sharedwith" method="POST">
+    {%  for line in pID %}
+    <input type="hidden" name="pID" value={{ line.pID }}><br>
+    {% endfor %}
+    <tr>select friendgroup</tr><br>
+     {% for line in friendgroup %}
+    <input type="radio" name="groupname" value={{ line.groupName }}>{{ line.groupName }}</input>
+    <br>
+    {% endfor %}
+    </tr>
+    </table>
+	<input type="submit" value = Post />
+</form>
 </body>
 </html>
